@@ -43,7 +43,7 @@
 * [ ] User Login: As a registered user, I want to log in to my account using my credentials so that I can access my expense data.
 * [ ] Add Expense: As a user, I want to add a new expense entry with details like amount, category, and date so that I can keep track of my spending.
 * [ ] View Expenses: As a user, I want to view a list of all my expenses sorted by date so that I can see a history of my spending.
-* [ ] Delete Expense: As a user, I want to delete an expense entry that I no longer need in my records.
+* [ ] Delete Expense and update: As a user, I want to delete/update an expense entry that I no longer need in my records.
 * [ ] Monthly Expense Summary: As a user, I want to see a summary of my expenses for the current month including total spending and breakdown by categories.
 * [ ] Filter Expenses by category: As a user, I want to filter my expenses by a specific category so that I can review my spending.
 
