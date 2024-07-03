@@ -1,7 +1,7 @@
 <div align='center'>
 
 <h1>MoneyTrack</h1>
-<p>Expense tracking APi</p>
+<p>MoneyTrack an expense tracker API is a RESTful web service designed to help users manage their expenses efficiently. It provides endpoints for creating, retrieving, updating, and deleting expense records, as well as functionalities for categorizing expenses, generating reports, and exporting data. This API is built with flexibility and ease of integration in mind, allowing developers to seamlessly incorporate expense tracking capabilities into their applications.</p>
 
 <h4> <span> · </span> <a href="https://github.com/skylershelvin/skyler_shelvin_p0/blob/master/README.md"> Documentation </a> <span> · </span> <a href="https://github.com/skylershelvin/skyler_shelvin_p0/issues"> Report Bug </a> <span> · </span> <a href="https://github.com/skylershelvin/skyler_shelvin_p0/issues"> Request Feature </a> </h4>
 
