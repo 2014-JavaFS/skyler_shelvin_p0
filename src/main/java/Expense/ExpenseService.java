@@ -1,4 +1,4 @@
-package Expense;
+package main.java.Expense;
 
 public interface ExpenseService {
 

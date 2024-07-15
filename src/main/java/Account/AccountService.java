@@ -1,4 +1,4 @@
-package Account;
+package main.java.Account;
 
 public interface AccountService {
     public Account saveAccount(Account account);

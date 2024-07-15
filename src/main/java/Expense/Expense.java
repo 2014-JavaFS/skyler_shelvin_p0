@@ -1,14 +1,13 @@
-package Expense;
+package main.java.Expense;
 
-import java.sql.Date;
 import java.time.LocalDate;
 
 public class Expense {
 
 
-    public long itemId;
+    public int itemId;
 
-    public long userId;
+    public int userId;
 
     public int amount;
     public String category;
@@ -18,7 +17,7 @@ public class Expense {
     public Expense(){
 
     }
-    //constructor for posting to Expense chart
+    //constructor for posting to main.java.Expense chart
     public Expense(int userId, int amount, String category, LocalDate date){
         this.userId = userId;
         this.amount = amount;
@@ -58,7 +57,7 @@ public class Expense {
         this.category = category;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 

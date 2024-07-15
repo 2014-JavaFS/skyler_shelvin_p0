@@ -1,4 +1,4 @@
-package Account;
+package main.java.Account;
 
 public class AccountDAO {
 
@@ -11,8 +11,7 @@ public class AccountDAO {
     }
 
     public Account saveAccount(Account account){
-        this.accountService.saveAccount(account);
-    }
+        return this.accountService.saveAccount(account);}
 
     public Account getAccount(long accountId){
         return accountService.getAccount(accountId);

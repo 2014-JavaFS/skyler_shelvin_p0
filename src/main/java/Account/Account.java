@@ -1,4 +1,4 @@
-package Account;
+package main.java.Account;
 
 public class Account {
 
@@ -63,7 +63,7 @@ public class Account {
 // String representation of this class
     @Override
     public String toString(){
-        return "Account{" +
+        return "main.java.Account{" +
                 "accountId=" + accountId +
                 ", email'" + email + '\'' +
                 ", password= " + password + '\'' +
