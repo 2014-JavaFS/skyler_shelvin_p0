@@ -9,9 +9,9 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class AccountRepository implements Crudable<Account> {
+public class AccountRepository {
 
-    @Override
+
     public boolean update(Account updatedAccount) {
         try(Connection connection = ConnectionFactory.getConnectionFactory().getConnection()) {
             String sql = "UPDATE accounts SET email = ?, password = ? WHERE id = ?";
@@ -33,7 +33,6 @@ public abstract class AccountRepository implements Crudable<Account> {
 
     }
 
-    @Override
     public boolean delete(Account account) {
         try(Connection connection = ConnectionFactory.getConnectionFactory().getConnection()){
             String sql = "DELETE FROM accounts Where accountId = ?";
@@ -54,7 +53,7 @@ public abstract class AccountRepository implements Crudable<Account> {
         }
     }
 
-    @Override
+
     public List<Account> findAll() {
         try(Connection connection = ConnectionFactory.getConnectionFactory().getConnection()){
             List<Account> accounts = new ArrayList<>();
@@ -72,7 +71,7 @@ public abstract class AccountRepository implements Crudable<Account> {
         }
     }
 
-    @Override
+
     public Account create(Account newAccount) {
         try(Connection connection = ConnectionFactory.getConnectionFactory().getConnection()) {
             String sql = "INSERT INTO accounts (email, password) Values (?, ?)";
@@ -95,7 +94,7 @@ public abstract class AccountRepository implements Crudable<Account> {
         return null;
     }
 
-    @Override
+
     public Account findById(int number) {
         try (Connection connection = ConnectionFactory.getConnectionFactory().getConnection()) {
             System.out.println("Account number provided to the Repository by service is {}"+ number);

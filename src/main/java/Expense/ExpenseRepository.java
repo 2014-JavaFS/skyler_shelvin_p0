@@ -9,9 +9,9 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class ExpenseRepository implements Crudable<Expense> {
+public  class ExpenseRepository {
 
-    @Override
+
     public boolean delete(Expense expense) {
         try(Connection connection = ConnectionFactory.getConnectionFactory().getConnection()){
             String sql = "DELETE FROM expenses Where itemId = ?";
@@ -32,7 +32,7 @@ public abstract class ExpenseRepository implements Crudable<Expense> {
         }
     }
 
-    @Override
+
     public List<Expense> findAll() {
         try(Connection connection = ConnectionFactory.getConnectionFactory().getConnection()){
             List<Expense> expenses = new ArrayList<>();
@@ -50,7 +50,7 @@ public abstract class ExpenseRepository implements Crudable<Expense> {
         }
     }
 
-    @Override
+
     public Expense create(Expense newObject) {
         try(Connection connection = ConnectionFactory.getConnectionFactory().getConnection()){
             String sql = "INSERT INTO expenses (userId, amount, category, date) VALUES (?,?,?,?)";
