@@ -1,16 +1,39 @@
-package main.java.Expense;
+package Expense;
 
-public interface ExpenseService {
+import Account.Account;
+import Util.DataNotFoundException;
+import Util.Serviceable;
 
-    Expense addExpense(Expense expense);
+import java.util.List;
 
-    Expense viewExpense(Expense expense);
+public class ExpenseService implements Serviceable<Expense> {
+
+    private ExpenseRepository expenseRepository;
+
+    public ExpenseService(ExpenseRepository expenseRepository){
+        this.expenseRepository = expenseRepository;
+    }
 
     Expense deleteExpense(Expense expense):
 
-    Expense filterExpense(Expense expense);
 
-    Expense expenseSummary(Expense expense);
+    @Override
+    public List<Expense> findAll() {
+        return null;
+    }
 
+    @Override
+    public Expense findById(int number) {
+        return null;
+    }
 
+    @Override
+    public Expense findByEmail(String email) {
+        return null;
+    }
+
+    @Override
+    public Expense create(Expense newObject) {
+        return null;
+    }
 }

@@ -7,4 +7,6 @@ public interface Serviceable<O>{
     O create(O newObject);
 
     O findById(int number);
+
+    O findByEmail(String email);
 }

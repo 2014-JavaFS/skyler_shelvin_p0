@@ -1,6 +1,6 @@
-package main.java.Expense;
+package Expense;
 
-import java.time.LocalDate;
+import java.sql.Timestamp;
 
 public class Expense {
 
@@ -11,21 +11,21 @@ public class Expense {
 
     public int amount;
     public String category;
-    public LocalDate date;
+    public Timestamp date;
 
     //no args constructor
     public Expense(){
 
     }
     //constructor for posting to main.java.Expense chart
-    public Expense(int userId, int amount, String category, LocalDate date){
+    public Expense(int userId, int amount, String category, Timestamp date){
         this.userId = userId;
         this.amount = amount;
         this.category = category;
         this.date = date;
     }
     //constructor to retrieve from db
-    public Expense(long itemId, int userId, int amount, String category, LocalDate date){
+    public Expense(int itemId, int userId, int amount, String category, Timestamp date){
         this.itemId = itemId;
         this.userId = userId;
         this.amount = amount;
@@ -33,11 +33,11 @@ public class Expense {
         this.date = date;
     }
 
-    public long getItemId() {
+    public int getItemId() {
         return itemId;
     }
 
-    public void setItemId(long itemId) {
+    public void setItemId(int itemId) {
         this.itemId = itemId;
     }
 
@@ -57,19 +57,19 @@ public class Expense {
         this.category = category;
     }
 
-    public LocalDate getDate() {
+    public Timestamp getDate() {
         return date;
     }
 
-    public void setDate(LocalDate date) {
+    public void setDate(Timestamp date) {
         this.date = date;
     }
 
-    public long getUserId() {
+    public int getUserId() {
         return userId;
     }
 
-    public void setUserId(long userId) {
+    public void setUserId(int userId) {
         this.userId = userId;
     }
 }

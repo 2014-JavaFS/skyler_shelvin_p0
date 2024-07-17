@@ -1,15 +1,15 @@
-package main.java.Account;
+package Account;
 
 public class Account {
 
-    long accountId;
+    int accountId;
 
     String email;
 
     String password;
 
     // no args constructor
-    public Account(long accountId, String email, String password){
+    public Account(int accountId, String email, String password){
 
     }
 
@@ -20,17 +20,21 @@ public class Account {
     }
 //method overloading - polymorphism
     // when retrieving an account from the database, all fields will be needed.
-    public Account(int accountId, String email, String password){
-        this.accountId = accountId;
-        this.password = password;
-        this.email = email;
+    //public Account(int accountId, String email, String password){
+     //   this.accountId = accountId;
+    //    this.password = password;
+     //   this.email = email;
+    //}
+
+    public Account() {
+
     }
 
-    public long getAccountId() {
+    public int getAccountId() {
         return accountId;
     }
 
-    public void setAccountId(long accountId) {
+    public void setAccountId(int accountId) {
         this.accountId = accountId;
     }
 
