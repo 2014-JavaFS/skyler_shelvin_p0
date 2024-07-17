@@ -53,7 +53,7 @@ public abstract class ExpenseRepository implements Crudable<Expense> {
     @Override
     public Expense create(Expense newObject) {
         try(Connection connection = ConnectionFactory.getConnectionFactory().getConnection()){
-            String sql = "INSERT INTO expenses (userId, amount, category) values (?,?,?)";
+            String sql = "INSERT INTO expenses (userId, amount, category, date) VALUES (?,?,?,?)";
 
             PreparedStatement statement = connection.prepareStatement(sql);
 
@@ -78,7 +78,7 @@ public abstract class ExpenseRepository implements Crudable<Expense> {
     }
 
 
-    public Expense findByCategory(String category) {
+    public List<Expense> findByCategory(int userId, String category) {
         try(Connection connection = ConnectionFactory.getConnectionFactory().getConnection()){
             System.out.println("Expense category provided to the Repository by service is {}"+ category);
             String sql = "SELECT * FROM expenses WHERE category = ?";
@@ -88,8 +88,8 @@ public abstract class ExpenseRepository implements Crudable<Expense> {
             ResultSet resultSet = statement.executeQuery();
 
             if (!resultSet.next()) {
-                System.out.println("Information not found within database given category number {}" + category);
-                throw new DataNotFoundException("No expense with id" + category + "exists in our database.");
+                System.out.println("Information not found within database given category {}" + category);
+                throw new DataNotFoundException("No expense within category" + category + "exists in our database.");
             }
 
             Expense foundExpense = generateExpenseFromResultSet(resultSet);
@@ -102,22 +102,24 @@ public abstract class ExpenseRepository implements Crudable<Expense> {
         return null;
     }
 
-    public Expense findByDate(Timestamp date) {
+    public List<Expense> findByDate(int userId, Timestamp start, Timestamp end) {
         try(Connection connection = ConnectionFactory.getConnectionFactory().getConnection()){
-            System.out.println("Expense date provided to the Repository by service is {}"+ date);
-            String sql = "SELECT * FROM expenses WHERE date = ?";
+            String sql = "SELECT * FROM expenses WHERE userId = ? AND date BETWEEN ? AND ?";
 
             PreparedStatement statement = connection.prepareStatement(sql);
-            System.out.println(statement.toString());
+            statement.setInt(1, userId);
+            statement.setTimestamp(2, start);
+            statement.setTimestamp(3,end);
             ResultSet resultSet = statement.executeQuery();
 
+            List<Expense> expenses = new ArrayList<>();
             if (!resultSet.next()) {
-                System.out.println("Information not found within database given date number {}" + date);
-                throw new DataNotFoundException("No expense within range" + date + "exists in our database.");
+                System.out.println("Information not found within database given date range {}" + start + ": " + end);
+                throw new DataNotFoundException("No expense within range start" + start + "range end "+ end + "exists in our database.");
             }
 
-            Expense foundExpense = generateExpenseFromResultSet(resultSet);
-            System.out.println("Sending back expense information {}" + foundExpense);
+           expenses.add(generateExpenseFromResultSet(resultSet));
+            System.out.println("Sending back expense information {}" + expenses);
 
         } catch (SQLException e) {
             e.printStackTrace();

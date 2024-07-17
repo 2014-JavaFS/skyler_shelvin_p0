@@ -1,12 +1,10 @@
 package Expense;
 
-import Account.Account;
-import Util.DataNotFoundException;
-import Util.Serviceable;
-
+import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.List;
 
-public class ExpenseService implements Serviceable<Expense> {
+public class ExpenseService  {
 
     private ExpenseRepository expenseRepository;
 
@@ -14,26 +12,26 @@ public class ExpenseService implements Serviceable<Expense> {
         this.expenseRepository = expenseRepository;
     }
 
-    Expense deleteExpense(Expense expense):
+    public Boolean deleteExpense(Expense expense){
+        return expenseRepository.delete(expense);
+    };
 
-
-    @Override
     public List<Expense> findAll() {
-        return null;
+        return expenseRepository.findAll();
     }
 
-    @Override
-    public Expense findById(int number) {
-        return null;
+
+    public List<Expense> findByCategory(int userId, String category) {
+        return expenseRepository.findByCategory(userId, category);
     }
 
-    @Override
-    public Expense findByEmail(String email) {
-        return null;
+
+    public List<Expense> findByDate(int userId, Timestamp start, Timestamp end) throws SQLException {
+        return expenseRepository.findByDate(userId, start, end);
     }
 
-    @Override
+
     public Expense create(Expense newObject) {
-        return null;
+        return expenseRepository.create(newObject);
     }
 }

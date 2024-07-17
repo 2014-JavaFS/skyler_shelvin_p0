@@ -2,6 +2,7 @@ package Account;
 
 import Util.Controller;
 
+import io.javalin.Javalin;
 import io.javalin.http.Context;
 import java.util.function.Predicate;
 
@@ -19,9 +20,6 @@ public class AccountController implements Controller {
     public void registerPaths(Javalin app){
         app.post("/login",this::postLoginHandler);
         app.post("/register", this::registerHandler);
-
-
-        return app;
     }
 
     private void registerHandler(Context ctx) throws Exception{
@@ -42,12 +40,12 @@ public class AccountController implements Controller {
         }
     }
 
-    private void postLoginHandler(Contect ctx)throws Exception{
+    private void postLoginHandler(Context ctx)throws Exception{
         Account account = ctx.bodyAsClass(Account.class);
         Account verifiedAccount = accountService.verifyAccount(account.email, account.password);
 
         if(verifiedAccount != null){
-            ctx.staus(200).json(verifiedAccount);
+            ctx.status(200).json(verifiedAccount);
         } else {
             ctx.status(401);
 
