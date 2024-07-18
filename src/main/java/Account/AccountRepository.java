@@ -143,7 +143,7 @@ public class AccountRepository {
             }
 
             Account foundAccount = generateAccountFromResultSet(resultSet);
-            System.out.println("Sending back flight information {}" + foundAccount);
+            System.out.println("Sending back Account information {}" + foundAccount);
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -165,7 +165,7 @@ public class AccountRepository {
 
             if (!resultSet.next()) {
                 System.out.println("No account found with the provided email and password.");
-                throw new DataNotFoundException("No account with the provided email and password exists in our database.");
+                System.out.println("No account with the provided email and password exists in our database.");
             }
 
             Account verifiedAccount = generateAccountFromResultSet(resultSet);

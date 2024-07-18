@@ -1,5 +1,7 @@
 package Expense;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.sql.Timestamp;
 
 public class Expense {
@@ -11,6 +13,7 @@ public class Expense {
 
     public int amount;
     public String category;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "UTC")
     public Timestamp date;
 
     //no args constructor

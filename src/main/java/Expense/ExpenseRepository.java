@@ -57,20 +57,22 @@ public  class ExpenseRepository {
             String sql = "INSERT INTO expenses (userId, amount, category, date) VALUES (?,?,?,?)";
 
             PreparedStatement statement = connection.prepareStatement(sql);
+            Timestamp currentTimestamp = new Timestamp(System.currentTimeMillis());
+
 
             statement.setInt(1, newObject.getUserId());
             statement.setInt(2, newObject.getAmount());
             statement.setString(3, newObject.getCategory());
-            statement.setTimestamp(4, new Timestamp(System.currentTimeMillis()));
+            statement.setTimestamp(4, currentTimestamp);
 
-            ResultSet resultSet = statement.executeQuery();
-            if (resultSet.next()) {
-                newObject.setItemId(resultSet.getInt("itemId"));
-                newObject.setDate(resultSet.getTimestamp("date"));
-                System.out.println("Expense created successfully: " + newObject);
-                return newObject;
+            int checkInsert = statement.executeUpdate();
+            if (checkInsert == 0) {
+                //newObject.setItemId(resultSet.getInt("itemId"));
+               // newObject.setDate(resultSet.getTimestamp("date"));
+                //System.out.println("Expense created successfully: " + newObject);
+                throw new RuntimeException("flight not inserted into database;");
             } else {
-                throw new SQLException("Creating expense failed, no ID obtained.");
+                return newObject;
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -82,9 +84,11 @@ public  class ExpenseRepository {
     public List<Expense> findByCategory(int userId, String category) {
         try(Connection connection = ConnectionFactory.getConnectionFactory().getConnection()){
             System.out.println("Expense category provided to the Repository by service is {}"+ category);
-            String sql = "SELECT * FROM expenses WHERE category = ?";
+            String sql = "SELECT * FROM expenses WHERE userId = ? AND category = ?";
 
             PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, userId);
+            statement.setString(2, category);
             System.out.println(statement.toString());
             ResultSet resultSet = statement.executeQuery();
 
@@ -116,7 +120,7 @@ public  class ExpenseRepository {
             List<Expense> expenses = new ArrayList<>();
             if (!resultSet.next()) {
                 System.out.println("Information not found within database given date range {}" + start + ": " + end);
-                throw new DataNotFoundException("No expense within range start" + start + "range end "+ end + "exists in our database.");
+                return expenses;
             }
 
            expenses.add(generateExpenseFromResultSet(resultSet));

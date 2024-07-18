@@ -37,7 +37,7 @@ public class AccountController implements Controller {
         if(newAccount != null){
             ctx.status(200).json(newAccount);
         }else{
-            ctx.status(400);
+            ctx.status(400).result("This email is already registered");
         }
     }
 
@@ -48,7 +48,7 @@ public class AccountController implements Controller {
         if(verifiedAccount != null){
             ctx.status(200).json(verifiedAccount);
         } else {
-            ctx.status(401);
+            ctx.status(404).result("incorrect login please try again");
 
         }
 

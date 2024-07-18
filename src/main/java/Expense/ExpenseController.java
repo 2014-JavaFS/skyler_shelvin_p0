@@ -1,7 +1,10 @@
 package Expense;
 
+import Util.DataNotFoundException;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
+
+
 import org.jetbrains.annotations.NotNull;
 
 import java.sql.SQLException;
@@ -10,6 +13,7 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.YearMonth;
 import java.util.List;
+import java.util.Objects;
 
 public class ExpenseController {
 
@@ -22,13 +26,14 @@ public class ExpenseController {
     public void registerPaths(Javalin app) {
         app.post("/expenses", this::addExpense);
         app.get("/expenses", this::getAllExpenses);
-        app.delete("/expenses/:itemId", this::deleteExpense);
-        app.get("/expenses/filter", this::filterExpensesByCategory);
-        app.get("/expenses/summary", this::getMonthlySummary);
+        app.delete("/expenses/itemId", this::deleteExpense);
+        app.get("/expenses/filter/{userId}/{category}", this::filterExpensesByCategory);
+        app.get("/expenses/summary/{userId}", ctx -> getMonthlySummary(ctx));
     }
 
+
     private void getMonthlySummary(@NotNull Context ctx) {
-        int userId = Integer.parseInt(ctx.pathParam("userId"));
+        int userId = Integer.parseInt(Objects.requireNonNull(ctx.pathParam("userId")));
 
         try {
             YearMonth currentMonth = YearMonth.now();
@@ -40,14 +45,14 @@ public class ExpenseController {
             List<Expense> summary = expenseService.findByDate(userId, startTimestamp, endTimestamp);
             ctx.json(summary);
             ctx.status(200);
-        } catch (SQLException e) {
+        } catch (DataNotFoundException | SQLException e) {
             e.printStackTrace();
-            ctx.status(500).result("Error retrieving monthly summary");
+            ctx.status(404).json("No expenses found within the specified date range.");
         }
     }
 
     private void filterExpensesByCategory(@NotNull Context ctx) {
-        int userId = Integer.parseInt(ctx.pathParam("userId"));
+        int userId = Integer.parseInt(Objects.requireNonNull(ctx.pathParam("userId")));
         String category = ctx.queryParam("category");
 
         if(userId == 0){
@@ -108,14 +113,19 @@ public class ExpenseController {
 
     private void addExpense(@NotNull Context ctx) {
         try{
+            System.out.println("Incoming request:" + ctx.body());
             Expense newExpense = ctx.bodyAsClass(Expense.class);
+            System.out.println("Parsed Expense object: " + newExpense);
             Expense createdExpense = expenseService.create(newExpense);
-            ctx.json(createdExpense);
-            ctx.status(201);
+            if (createdExpense != null){
+                ctx.json(createdExpense);
+                ctx.status(201);
+            }else {
+                ctx.status(500).result("Error adding new expense.");
+            }
         } catch(Exception e){
             e.printStackTrace();
-            ctx.status();
-            ctx.result("error adding new expense.");
+            ctx.status(500).result("error adding new expense.");
         }
     }
 
