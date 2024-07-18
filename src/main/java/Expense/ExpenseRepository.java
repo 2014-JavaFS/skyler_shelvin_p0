@@ -38,7 +38,8 @@ public  class ExpenseRepository {
             List<Expense> expenses = new ArrayList<>();
 
             String sql = "SELECT * FROM expenses";
-            ResultSet rs = connection.createStatement().getResultSet();
+            PreparedStatement statement = connection.prepareStatement(sql);
+            ResultSet rs = statement.executeQuery();
 
             while(rs.next()){
                 expenses.add(generateExpenseFromResultSet(rs));

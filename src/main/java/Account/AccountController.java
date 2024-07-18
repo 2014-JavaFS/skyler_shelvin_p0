@@ -18,6 +18,7 @@ public class AccountController implements Controller {
 
     @Override
     public void registerPaths(Javalin app){
+        app.get("/" ,ctx-> ctx.result("Welcome to Money Talk Phase 1"));
         app.post("/login",this::postLoginHandler);
         app.post("/register", this::registerHandler);
     }

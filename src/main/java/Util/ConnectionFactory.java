@@ -41,10 +41,7 @@ public class ConnectionFactory {
     //obfuscate info from db.properties
     public Connection getConnection(){
         try{
-            return DriverManager.getConnection(properties.getProperty("url"),
-                    properties.getProperty("user"),
-                    properties.getProperty("password")
-            );
+            return DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres","postgres","password");
         } catch (SQLException e){
             e.printStackTrace();
             return null;
